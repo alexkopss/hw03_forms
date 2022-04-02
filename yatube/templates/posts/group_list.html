@@ -1,0 +1,26 @@
+{% extends 'base.html' %} <!-- Расширение базвого файла -->
+      {% block content %} 
+      <!-- класс py-5 создает отступы сверху и снизу блока -->
+      {% block title %}
+        <title>Подборка групп</title>
+      {% endblock %} 
+      <div class="container py-5">
+      <h1>{{ group.title }}</h1> 
+        <article>
+          {% for post in page_obj %}
+          <ul>
+            <li>
+              Автор: {{ post.author.username }}
+            </li>
+            <li>
+              Дата публикации: {{ post.pub_date|date:"d E Y" }}
+            </li>
+          </ul>
+          <p>{{ post.text }}</p>    
+          {% if not forloop.last %}<hr>{% endif %}
+          {% endfor %} 
+        </article>
+        <!-- под последним постом нет линии -->
+      </div>
+    {% endblock %}  
+   
