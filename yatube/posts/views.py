@@ -65,10 +65,10 @@ def profile(request, username):
 
 
 def post_detail(request, post_id):
-    post_det = Post.objects.filter(id=post_id)
+    post = Post.objects.get(id=post_id)
     author_posts = Post.objects.filter(id=post_id).count()
     context = {
-        'post_det': post_det,
+        'post': post,
         'author_posts': author_posts,
     }
     return render(request, 'posts/post_detail.html', context)

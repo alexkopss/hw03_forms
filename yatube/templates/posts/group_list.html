@@ -2,12 +2,14 @@
       {% block content %} 
       <!-- класс py-5 создает отступы сверху и снизу блока -->
       {% block title %}
-        <title>Записи {{group.title}}</title>
+        <title>{{group.title}}</title>
       {% endblock %} 
       <div class="container py-5">
         {% block header %}
         <h1>Записи сообщества: Лев Толстой – зеркало русской революции</h1>
+        <div class="container py-4">
         {{group.title}}
+        <div class="container py-4">
         {% endblock %}
         <article>
           {% for post in page_obj %}
