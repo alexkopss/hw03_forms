@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %} Новый пост {% endblock %}
+{% comment %} {% block title %} Новый пост {% endblock %} {% endcomment %}
 {% block content %}
+{% comment %} <title>Новый пост</title> {% endcomment %}
   <body>	   
     <main>
      
@@ -17,9 +18,10 @@
               </div>
               <div class="card-body">
                 {% if is_edit %}        
-                  <form method="post" action="{% url 'post_edit' post_id %}">
-                  {% else %}
-                  <form method="post" action="{% url 'post_create' %}">
+                  <form method="post" action="{% url 'posts:post_edit' post_id %}">
+                    {% csrf_token %}
+                    {% else %}
+                  <form method="post" action="{% url 'posts:post_create' %}">
                     {% endif %} 
                     {% comment %} <form method="post" action="{% url 'post_create' %}"> {% endcomment %}
                 {% csrf_token %}
@@ -28,25 +30,23 @@
                       Текст поста                  
                       <span class="required text-danger" >*</span>                  
                     </label>
-                    <textarea name="text" cols="40" rows="10" class="form-control" required id="id_text">
-                    </textarea>                
-                    <small id="id_text-help" class="form-text text-muted">
-                      Текст нового поста
-                    </small>                  
-                  </div>            
-                  <div class="form-group row my-3 p-3">
-                    <label for="id_group">
-                      Список групп                  
-                    </label>
-                    <select name="group" class="form-control" id="id_group">
-                      {% for group in form.group %}
-                      <option selected>{{group}}</option>
-                      {% endfor %}
-                    </select>
-                    <small id="id_group-help" class="form-text text-muted">
-                      Группа, к которой будет относиться пост
-                    </small>
-                  </div>
+                    {% for field in form %}
+                      <div class="form-group row my-3 p-3">
+                        <label for="{{ field.id_for_label }}">
+                          {{ field.label }}
+                          {% if field.field.required %}
+                            <span class="required text-danger">*</span>
+                          {% endif %}
+                        </label>    
+                        {{ field }}
+                        </div>
+                        <small id="id_group-help" class="form-text text-muted">
+                          Текст поста
+                        </small>
+                    {% endfor %}
+                  <small id="id_group-help" class="form-text text-muted">
+                    Группа, к которой будет относиться пост
+                  </small>
                   <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">
                         {% if is_edit %}

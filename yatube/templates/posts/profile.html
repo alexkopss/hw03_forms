@@ -19,7 +19,7 @@
             <p>{{ post.text }}</p> 
             {% if post.author %} 
             <p><a target="_blank" 
-               href="{% url 'post_detail' post.pk %}">подробная информация </a></p>
+               href="{% url 'posts:post_detail' post.pk %}">подробная информация </a></p>
             {% endif %}
             {% if post.group %}   
             <p><a target="_blank"

@@ -37,7 +37,7 @@ def group_posts(request, slug):
     # Метод .filter позволяет ограничить поиск по критериям.
     # Это аналог добавления
     # условия WHERE group_id = {group_id}
-    posts = Post.objects.filter(group=group).order_by('-pub_date')[:10]
+    posts = Post.objects.filter(group=group).order_by('-pub_date')
     paginator = Paginator(posts, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -90,7 +90,7 @@ def post_create(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            return redirect('profile', username=post.author)
+            return redirect('posts:profile', username=post.author)
 
         return render(request, 'posts/post_create.html', {'form': form})
 
@@ -109,7 +109,7 @@ def post_edit(request, post_id):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.save()
+            form.save()
             return redirect('posts:profile', post_id=post_id)
         else:
             form = PostForm(instance=post)
@@ -118,3 +118,24 @@ def post_edit(request, post_id):
         'posts/post_create.html',
         {'form': form, 'is_edit': is_edit, 'post_id': post_id}
     )
+
+
+# @login_required()
+# def post_edit(request, post_id):
+#     post = get_object_or_404(Post, pk=post_id)
+#     is_edit = True
+#     template = 'posts/create_post.html'
+#     if request.user == post.author:
+#         form = PostForm(
+#             request.POST or None,
+#             instance=post
+#         )
+#         if form.is_valid():
+#             form.save()
+#             return redirect('post_detail', post_id=post_id)
+#     context = {
+#         'post_id': post_id,
+#         'form': form,
+#         'is_edit': is_edit
+#     }
+#     return render(request, template, context)

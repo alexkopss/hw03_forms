@@ -2,21 +2,31 @@
       {% block content %} 
       <!-- класс py-5 создает отступы сверху и снизу блока -->
       {% block title %}
-        <title>Подборка групп</title>
+        <title>Записи {{group.title}}</title>
       {% endblock %} 
       <div class="container py-5">
-      <h1>{{ group.title }}</h1> 
+        {% block header %}
+        <h1>Записи сообщества: Лев Толстой – зеркало русской революции</h1>
+        {{group.title}}
+        {% endblock %}
         <article>
           {% for post in page_obj %}
           <ul>
             <li>
-              Автор: {{ post.author.username }}
+              Автор: {{ post.author.username }} <a href="{% url 'posts:profile' post.author.username %}">все посты пользователя</a>
             </li>
             <li>
               Дата публикации: {{ post.pub_date|date:"d E Y" }}
             </li>
           </ul>
-          <p>{{ post.text }}</p>    
+          <p>{{ post.text }}</p>
+          {% if post.group %}   
+          <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
+          {% endif %}
+          {% if post.author %} 
+            <p><a target="_blank" 
+               href="{% url 'posts:post_detail' post.pk %}">подробная информация </a></p>
+            {% endif %}     
           {% if not forloop.last %}<hr>{% endif %}
           {% endfor %} 
         </article>
