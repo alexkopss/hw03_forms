@@ -110,7 +110,7 @@ def post_edit(request, post_id):
             post = form.save(commit=False)
             post.author = request.user
             form.save()
-            return redirect('posts:profile', post_id=post_id)
+            return redirect('posts:post_detail', post_id=post_id)
         else:
             form = PostForm(instance=post)
     return render(
