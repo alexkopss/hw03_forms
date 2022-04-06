@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from posts import views
+# from posts import views
 
 urlpatterns = [
     # импорт правил из приложения posts

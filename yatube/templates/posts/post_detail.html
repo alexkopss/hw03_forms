@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 {% extends "base.html" %}
 {% block title %}Пост:
     {{ post.text|truncatechars:30 }}.
@@ -28,10 +27,9 @@
             <p>
                 {{ post.text }}
             </p>
-        {% comment %} <a class="btn btn-primary" href="{% url 'posts:post_edit' post_id %}">
-          редактировать запись
-        </a>   {% endcomment %}
+        <a class="btn btn-primary" href="{% url 'posts:post_edit' post.id  %}">
+          Редактировать запись
+        </a>
           </article>
 </div> 
 {% endblock  %}
-</html> 

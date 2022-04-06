@@ -18,9 +18,7 @@
   {% endblock %} 
   </head>
   <body>
-    <header>
       {% include 'includes/header.html' %}      
-    </header>
     <main>
       <div class="container py-5">
 	 {% block content %}	 
@@ -30,8 +28,6 @@
     <!-- border-top: создаёт тонкую линию сверху блока -->
     <!-- text-center: выравнивает текстовые блоки внутри блока по центру -->
     <!-- py-3: контент внутри размещается с отступом сверху и снизу -->         
-    <footer class="border-top text-center py-3">
       <!-- Ссылка на footer --> 
       {% include 'includes/footer.html' %}    
-    </footer>
   </body>
