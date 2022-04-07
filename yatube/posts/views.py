@@ -76,17 +76,13 @@ def post_create(request):
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     is_edit = True
-    form = PostForm(request.POST, instance=post)
-    if post.author == request.user:
-        if request.method == 'POST':
-            form = PostForm(request.POST, instance=post)
-    if form.is_valid():
-        post = form.save(commit=False)
-        post.author = request.user
-        form.save()
-        return redirect('posts:post_detail', post_id=post_id)
-    else:
-        form = PostForm(instance=post)
+    form = PostForm(request.POST or None, instance=post)
+    if post.author == request.user and request.method == 'POST':
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            form.save()
+            return redirect('posts:post_detail', post_id=post_id)
     return render(
         request,
         'posts/post_create.html',

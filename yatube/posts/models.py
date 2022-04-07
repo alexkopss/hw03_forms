@@ -6,9 +6,6 @@ User = get_user_model()
 
 class Post(models.Model):
 
-    class Meta:
-        ordering = ['-pub_date']
-
     text = models.TextField(verbose_name='Описание')
     pub_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
     author = models.ForeignKey(
@@ -25,6 +22,9 @@ class Post(models.Model):
         related_name='posts',
         verbose_name='Имя группы'
     )
+
+    class Meta:
+        ordering = ['-pub_date']
 
     def __str__(self) -> str:
         return self.text
