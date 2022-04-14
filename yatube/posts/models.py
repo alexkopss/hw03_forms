@@ -27,7 +27,7 @@ class Post(models.Model):
         ordering = ['-pub_date']
 
     def __str__(self) -> str:
-        return self.text
+        return self.text[:15]
 
 
 class Group(models.Model):
